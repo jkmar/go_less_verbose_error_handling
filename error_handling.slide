@@ -1,0 +1,132 @@
+Title
+Subtitle
+
+* Docker
+
+.code examples/docker.go /START/,/END/
+
+* ETCD
+
+.code examples/etcd.go /START/,/END/
+
+* Kubernetes
+
+.code examples/kubernetes.go /START/,/END/
+
+* TODO title
+
+.code standard/main.go /START getCommandsFromFile/,/END getCommandsFromFile/
+
+* TODO title
+
+.code standard/main.go /START readConfiguration/,/END readConfiguration/
+
+* TODO title
+
+.code standard/main.go /START parseConfiguration/,/END parseConfiguration/
+
+* TODO title
+
+.code standard/main.go /START calculateCommands/,/END calculateCommands/
+
+* TODO title
+
+.code standard/main.go /START calculateDownCommands/,/END calculateDownCommands/
+
+* TODO title
+
+.code standard/main.go /START calculateUpCommands/,/END calculateUpCommands/
+
+* TODO title
+
+.play standard/main.go /START main/,/END main/
+
+* Error in struct
+
+* TODO title
+
+.code error_in_struct/main.go /START ErrorReader/,/END ErrorReader/
+
+* TODO title
+
+.code standard/main.go /START readConfiguration/,/END readConfiguration/ HL_error_in_struct
+
+* TODO title
+
+.code error_in_struct/main.go /START readConfiguration/,/END readConfiguration/ HL_error_in_struct
+
+* TODO title
+
+.play error_in_struct/main.go /START main/,/END main/
+
+* TODO title
+
+.code error_in_struct/main.go /START ErrorParser/,/END ErrorParser/
+
+* Error checker
+
+* TODO title
+
+.play check/main.go /START main/,/END main/
+
+* Monad
+
+* TODO title
+
+.play monad/main.go /START main/,/END main/
+
+* Generic Monad
+
+* TODO title
+
+.play generic_monad/main.go /START main/,/END main/
+
+* Go 2
+
+* TODO title
+
+.code go2/go2.go /START getCommandsFromFile/,/END getCommandsFromFile/ HL_check
+
+* TODO title
+
+.code go2/go2.go /START readConfiguration/,/END readConfiguration/ HL_check
+
+* TODO title
+
+.code go2/go2.go /START parseConfiguration/,/END parseConfiguration/ HL_check
+
+* TODO title
+
+.code go2/go2.go /START calculateCommands/,/END calculateCommands/ HL_check
+
+* TODO title
+
+.code go2/go2.go /START calculateDownCommands/,/END calculateDownCommands/ HL_check
+
+* TODO title
+
+.code go2/go2.go /START calculateUpCommands/,/END calculateUpCommands/ HL_check
+
+* TODO title
+
+.code go2/main.go /START Error/,/END Error/
+
+* TODO title
+
+.code go2/main.go /START NewError/,/END NewError/
+
+* TODO title
+
+.code go2/main.go /START check/,/END check/
+
+* TODO title
+
+.code go2/main.go /START handle/,/END handle/
+
+* TODO title
+
+.code go2/main.go /START getCommandsFromFile/,/END getCommandsFromFile/ HL_check
+
+* TODO title
+
+.play go2/main.go /START main/,/END main/

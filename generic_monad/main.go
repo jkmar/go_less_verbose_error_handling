@@ -30,8 +30,49 @@ type Configuration struct {
 	Data    map[string]string
 }
 
+// START CommandGetter OMIT
+type CommandGetter struct {
+	filename         string
+	rawConfiguration *RawConfiguration
+	configuration    *Configuration
+	commands         []string
+}
+
+// END CommandGetter OMIT
+
+// START CommandGetter readConfiguration OMIT
+func (g *CommandGetter) readConfiguration() error {
+	var err error
+	g.rawConfiguration, err = readConfiguration(g.filename)
+	return err
+}
+
+// END CommandGetter readConfiguration OMIT
+
+// START CommandGetter parseConfiguration OMIT
+func (g *CommandGetter) parseConfiguration() error {
+	var err error
+	g.configuration, err = parseConfiguration(g.rawConfiguration)
+	return err
+}
+
+// END CommandGetter parseConfiguration OMIT
+
+// START CommandGetter calculateCommands OMIT
+func (g *CommandGetter) calculateCommands() error {
+	var err error
+	g.commands, err = calculateCommands(g.configuration)
+	return err
+}
+
+// END CommandGetter calculateCommands OMIT
+
+// START Func OMIT
 type Func func(interface{}) (interface{}, error)
 
+// END Func OMIT
+
+// START EitherWrap OMIT
 func EitherWrap(f interface{}) Func {
 	v := reflect.ValueOf(f)
 	return func(x interface{}) (interface{}, error) {
@@ -44,6 +85,9 @@ func EitherWrap(f interface{}) Func {
 	}
 }
 
+// END EitherWrap OMIT
+
+// START DoEither OMIT
 func DoEither(x interface{}, fs ...Func) (interface{}, error) {
 	var err error
 	for _, f := range fs {
@@ -54,6 +98,9 @@ func DoEither(x interface{}, fs ...Func) (interface{}, error) {
 	return x, nil
 }
 
+// END DoEither OMIT
+
+// START MakeTyped OMIT
 func MakeTyped(x interface{}, err error) ([]string, error) {
 	result, ok := x.([]string)
 	if !ok {
@@ -62,14 +109,16 @@ func MakeTyped(x interface{}, err error) ([]string, error) {
 	return result, err
 }
 
+// END MakeTyped OMIT
+
 // START getCommandsFromFile OMIT
 func getCommandsFromFile(filename string) ([]string, error) {
-	return MakeTyped(DoEither(
-		filename,
-		EitherWrap(readConfiguration),
-		EitherWrap(parseConfiguration),
-		EitherWrap(calculateCommands),
-	))
+	return MakeTyped(DoEither( // HL_generic_monad
+		filename,                       // HL_generic_monad
+		EitherWrap(readConfiguration),  // HL_generic_monad
+		EitherWrap(parseConfiguration), // HL_generic_monad
+		EitherWrap(calculateCommands),  // HL_generic_monad
+	)) // HL_generic_monad
 }
 
 // END getCommandsFromFile OMIT

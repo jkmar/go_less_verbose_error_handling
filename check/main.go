@@ -35,14 +35,17 @@ func getCommandsFromFile(filename string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	configuration, err := parseConfiguration(rawConfiguration)
 	if err != nil {
 		return nil, err
 	}
+
 	commands, err := calculateCommands(configuration)
 	if err != nil {
 		return nil, err
 	}
+
 	return commands, nil
 }
 
@@ -54,16 +57,25 @@ type ErrorReader struct {
 	reader *bufio.Reader
 }
 
+// END ErrorReader  OMIT
+
+// START NewErrorReader OMIT
 func NewErrorReader(reader *bufio.Reader) *ErrorReader {
 	return &ErrorReader{
 		reader: reader,
 	}
 }
 
+// END NewErrorReader OMIT
+
+// START ErrorReader Err OMIT
 func (r *ErrorReader) Err() error {
 	return r.err
 }
 
+// END ErrorReader Err OMIT
+
+// START ErrorReader ReadLine OMIT
 func (r *ErrorReader) ReadLine() []byte {
 	if r.err != nil {
 		return nil
@@ -74,7 +86,7 @@ func (r *ErrorReader) ReadLine() []byte {
 	return result
 }
 
-// END ErrorReader  OMIT
+// END ErrorReader ReadLine OMIT
 
 // START readConfiguration OMIT
 func readConfiguration(filename string) (*RawConfiguration, error) {
@@ -104,14 +116,23 @@ type ErrorParser struct {
 	err error
 }
 
+// END ErrorParser  OMIT
+
+// START NewErrorParser OMIT
 func NewErrorParser() *ErrorParser {
 	return &ErrorParser{}
 }
 
+// END NewErrorParser OMIT
+
+// START ErrorParser Err OMIT
 func (p *ErrorParser) Err() error {
 	return p.err
 }
 
+// END ErrorParser Err OMIT
+
+// START ErrorParser parseVersion OMIT
 func (p *ErrorParser) parseVersion(configuration *RawConfiguration) int {
 	if p.err != nil {
 		return 0
@@ -122,6 +143,9 @@ func (p *ErrorParser) parseVersion(configuration *RawConfiguration) int {
 	return result
 }
 
+// END ErrorParser parseVersion OMIT
+
+// START ErrorParser parseData OMIT
 func (p *ErrorParser) parseData(configuration *RawConfiguration) map[string]string {
 	if p.err != nil {
 		return nil
@@ -132,21 +156,30 @@ func (p *ErrorParser) parseData(configuration *RawConfiguration) map[string]stri
 	return result
 }
 
-// END ErrorParser  OMIT
+// END ErrorParser parseData OMIT
 
 // START ErrorChecker  OMIT
 type ErrorChecker struct {
 	err error
 }
 
+// END ErrorChecker  OMIT
+
+// START NewErrorChecker OMIT
 func NewErrorChecker() *ErrorChecker {
 	return &ErrorChecker{}
 }
 
+// END NewErrorChecker OMIT
+
+// START ErrorChecker Err OMIT
 func (c *ErrorChecker) Err() error {
 	return c.err
 }
 
+// END ErrorChecker Err OMIT
+
+// START ErrorChecker StrconvAtoi OMIT
 func (c *ErrorChecker) StrconvAtoi(s string) int {
 	if c.err != nil {
 		return 0
@@ -157,6 +190,9 @@ func (c *ErrorChecker) StrconvAtoi(s string) int {
 	return result
 }
 
+// END ErrorChecker StrconvAtoi OMIT
+
+// START ErrorChecker JsonUnmarshal OMIT
 func (c *ErrorChecker) JsonUnmarshal(data []byte, v interface{}) {
 	if c.err != nil {
 		return
@@ -165,18 +201,18 @@ func (c *ErrorChecker) JsonUnmarshal(data []byte, v interface{}) {
 	c.err = json.Unmarshal(data, v)
 }
 
-// END ErrorChecker  OMIT
+// END ErrorChecker JsonUnmarshal OMIT
 
 // START parseConfiguration OMIT
 func parseConfiguration(configuration *RawConfiguration) (*Configuration, error) {
-	checker := NewErrorChecker()
-	version := checker.StrconvAtoi(string(configuration.header))
+	checker := NewErrorChecker()                                 // HL_check
+	version := checker.StrconvAtoi(string(configuration.header)) // HL_check
 
 	var data map[string]string
-	checker.JsonUnmarshal(configuration.body, &data)
-	if err := checker.Err(); err != nil {
-		return nil, err
-	}
+	checker.JsonUnmarshal(configuration.body, &data) // HL_check
+	if err := checker.Err(); err != nil {            // HL_check
+		return nil, err // HL_check
+	} // HL_check
 
 	return &Configuration{
 		Version: version,

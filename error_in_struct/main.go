@@ -35,16 +35,25 @@ type ErrorReader struct {
 	reader *bufio.Reader
 }
 
+// END ErrorReader  OMIT
+
+// START NewErrorReader OMIT
 func NewErrorReader(reader *bufio.Reader) *ErrorReader {
 	return &ErrorReader{
 		reader: reader,
 	}
 }
 
+// END NewErrorReader OMIT
+
+// START ErrorReader Err OMIT
 func (r *ErrorReader) Err() error {
 	return r.err
 }
 
+// END ErrorReader Err OMIT
+
+// START ErrorReader ReadLine OMIT
 func (r *ErrorReader) ReadLine() []byte {
 	if r.err != nil {
 		return nil
@@ -55,7 +64,7 @@ func (r *ErrorReader) ReadLine() []byte {
 	return result
 }
 
-// END ErrorReader  OMIT
+// END ErrorReader ReadLine OMIT
 
 // START getCommandsFromFile OMIT
 func getCommandsFromFile(filename string) ([]string, error) {
@@ -63,14 +72,17 @@ func getCommandsFromFile(filename string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	configuration, err := parseConfiguration(rawConfiguration)
 	if err != nil {
 		return nil, err
 	}
+
 	commands, err := calculateCommands(configuration)
 	if err != nil {
 		return nil, err
 	}
+
 	return commands, nil
 }
 
@@ -98,41 +110,6 @@ func readConfiguration(filename string) (*RawConfiguration, error) {
 }
 
 // END readConfiguration OMIT
-
-// START ErrorParser  OMIT
-type ErrorParser struct {
-	err error
-}
-
-func NewErrorParser() *ErrorParser {
-	return &ErrorParser{}
-}
-
-func (p *ErrorParser) Err() error {
-	return p.err
-}
-
-func (p *ErrorParser) parseVersion(configuration *RawConfiguration) int {
-	if p.err != nil {
-		return 0
-	}
-
-	var result int
-	result, p.err = strconv.Atoi(string(configuration.header))
-	return result
-}
-
-func (p *ErrorParser) parseData(configuration *RawConfiguration) map[string]string {
-	if p.err != nil {
-		return nil
-	}
-
-	var result map[string]string
-	p.err = json.Unmarshal(configuration.body, &result)
-	return result
-}
-
-// END ErrorParser  OMIT
 
 // START parseConfiguration OMIT
 func parseConfiguration(configuration *RawConfiguration) (*Configuration, error) {

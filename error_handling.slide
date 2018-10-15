@@ -13,120 +13,262 @@ Subtitle
 
 .code examples/kubernetes.go /START/,/END/
 
-* TODO title
+* Example
+
+* Example
 
 .code standard/main.go /START getCommandsFromFile/,/END getCommandsFromFile/
 
-* TODO title
+* Example
 
 .code standard/main.go /START readConfiguration/,/END readConfiguration/
 
-* TODO title
+* Example
 
 .code standard/main.go /START parseConfiguration/,/END parseConfiguration/
 
-* TODO title
+* Example
 
 .code standard/main.go /START calculateCommands/,/END calculateCommands/
 
-* TODO title
+* Example
 
 .code standard/main.go /START calculateDownCommands/,/END calculateDownCommands/
 
-* TODO title
+* Example
 
 .code standard/main.go /START calculateUpCommands/,/END calculateUpCommands/
 
-* TODO title
+* Example
 
 .play standard/main.go /START main/,/END main/
 
 * Error in struct
 
-* TODO title
+* Error in struct
+
+.code standard/main.go /START readConfiguration/,/END readConfiguration/
+
+* Error in struct
 
 .code error_in_struct/main.go /START ErrorReader/,/END ErrorReader/
 
-* TODO title
+* Error in struct
+
+.code error_in_struct/main.go /START NewErrorReader/,/END NewErrorReader/
+
+* Error in struct
+
+.code error_in_struct/main.go /START ErrorReader Err/,/END ErrorReader Err/
+
+* Error in struct
+
+.code error_in_struct/main.go /START ErrorReader ReadLine/,/END ErrorReader ReadLine/
+
+* Error in struct
 
 .code standard/main.go /START readConfiguration/,/END readConfiguration/ HL_error_in_struct
 
-* TODO title
+* Error in struct
 
 .code error_in_struct/main.go /START readConfiguration/,/END readConfiguration/ HL_error_in_struct
 
-* TODO title
+* Error in struct
 
 .play error_in_struct/main.go /START main/,/END main/
 
-* TODO title
-
-.code error_in_struct/main.go /START ErrorParser/,/END ErrorParser/
+* Error checker
 
 * Error checker
 
-* TODO title
+.code standard/main.go /START parseConfiguration/,/END parseConfiguration/
+
+* Error checker
+
+.code check/main.go /START ErrorParser/,/END ErrorParser/
+
+* Error checker
+
+.code check/main.go /START NewErrorParser/,/END NewErrorParser/
+
+* Error checker
+
+.code check/main.go /START ErrorParser Err/,/END ErrorParser Err/
+
+* Error checker
+
+.code check/main.go /START ErrorParser parseVersion/,/END ErrorParser parseVersion/
+
+* Error checker
+
+.code check/main.go /START ErrorParser parseData/,/END ErrorParser parseData/
+
+* Error checker
+
+.code check/main.go /START NewErrorChecker/,/END NewErrorChecker/
+
+* Error checker
+
+.code check/main.go /START ErrorChecker Err/,/END ErrorChecker Err/
+
+* Error checker
+
+.code check/main.go /START ErrorChecker StrconvAtoi/,/END ErrorChecker StrconvAtoi/
+
+* Error checker
+
+.code check/main.go /START ErrorChecker JsonUnmarshal/,/END ErrorChecker JsonUnmarshal/
+
+* Error checker
+
+.code standard/main.go /START parseConfiguration/,/END parseConfiguration/ HL_check
+
+* Error checker
+
+.code check/main.go /START parseConfiguration/,/END parseConfiguration/ HL_check
+
+* Error checker
 
 .play check/main.go /START main/,/END main/
 
 * Monad
 
-* TODO title
+* Monad
+
+.code standard/main.go /START calculateCommands/,/END calculateCommands/
+
+* Monad
+
+.code monad/main.go /START ConfigurationCalculator/,/END ConfigurationCalculator/
+
+* Monad
+
+.code monad/main.go /START NewConfigurationCalculator/,/END NewConfigurationCalculator/
+
+* Monad
+
+.code monad/main.go /START ConfigurationCalculator GetCommands/,/END ConfigurationCalculator GetCommands/
+
+* Monad
+
+.code monad/main.go /START ConfigurationCalculator calculateDownCommands/,/END ConfigurationCalculator calculateDownCommands/
+
+* Monad
+
+.code monad/main.go /START ConfigurationCalculator calculateUpCommands/,/END ConfigurationCalculator calculateUpCommands/
+
+* Monad
+
+.code monad/main.go /START Do/,/END Do/
+
+* Monad
+
+.code standard/main.go /START calculateCommands/,/END calculateCommands/ HL_monad
+
+* Monad
+
+.code monad/main.go /START calculateCommands/,/END calculateCommands/ HL_monad
+
+* Monad
 
 .play monad/main.go /START main/,/END main/
 
 * Generic Monad
 
-* TODO title
+* Generic Monad
+
+.code standard/main.go /START getCommandsFromFile/,/END getCommandsFromFile/
+
+* Generic Monad
+
+.code generic_monad/main.go /START CommandGetter/,/END CommandGetter/
+
+* Generic Monad
+
+.code generic_monad/main.go /START CommandGetter readConfiguration/,/END CommandGetter readConfiguration/
+
+* Generic Monad
+
+.code generic_monad/main.go /START CommandGetter parseConfiguration/,/END CommandGetter parseConfiguration OMIT/
+
+* Generic Monad
+
+.code generic_monad/main.go /START CommandGetter calculateCommands/,/END CommandGetter calculateCommands/
+
+* Generic Monad
+
+.code generic_monad/main.go /START Func/,/END Func/
+
+* Generic Monad
+
+.code generic_monad/main.go /START EitherWrap/,/END EitherWrap/
+
+* Generic Monad
+
+.code generic_monad/main.go /START DoEither/,/END DoEither/
+
+* Generic Monad
+
+.code generic_monad/main.go /START MakeTyped/,/END MakeTyped/
+
+* Generic Monad
+
+.code standard/main.go /START getCommandsFromFile/,/END getCommandsFromFile/ HL_generic_monad
+
+* Generic Monad
+
+.code generic_monad/main.go /START getCommandsFromFile/,/END getCommandsFromFile/ HL_generic_monad
+
+* Generic Monad
 
 .play generic_monad/main.go /START main/,/END main/
 
 * Go 2
 
-* TODO title
+* Go 2
 
 .code go2/go2.go /START getCommandsFromFile/,/END getCommandsFromFile/ HL_check
 
-* TODO title
+* Go 2
 
 .code go2/go2.go /START readConfiguration/,/END readConfiguration/ HL_check
 
-* TODO title
+* Go 2
 
 .code go2/go2.go /START parseConfiguration/,/END parseConfiguration/ HL_check
 
-* TODO title
+* Go 2
 
 .code go2/go2.go /START calculateCommands/,/END calculateCommands/ HL_check
 
-* TODO title
+* Go 2
 
 .code go2/go2.go /START calculateDownCommands/,/END calculateDownCommands/ HL_check
 
-* TODO title
+* Go 2
 
 .code go2/go2.go /START calculateUpCommands/,/END calculateUpCommands/ HL_check
 
-* TODO title
+* Go 2
 
 .code go2/main.go /START Error/,/END Error/
 
-* TODO title
+* Go 2
 
 .code go2/main.go /START NewError/,/END NewError/
 
-* TODO title
+* Go 2
 
 .code go2/main.go /START check/,/END check/
 
-* TODO title
+* Go 2
 
 .code go2/main.go /START handle/,/END handle/
 
-* TODO title
+* Go 2
 
 .code go2/main.go /START getCommandsFromFile/,/END getCommandsFromFile/ HL_check
 
-* TODO title
+* Go 2
 
 .play go2/main.go /START main/,/END main/

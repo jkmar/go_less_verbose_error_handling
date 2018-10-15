@@ -35,14 +35,17 @@ func getCommandsFromFile(filename string) ([]string, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	configuration, err := parseConfiguration(rawConfiguration)
 	if err != nil {
 		return nil, err
 	}
+
 	commands, err := calculateCommands(configuration)
 	if err != nil {
 		return nil, err
 	}
+
 	return commands, nil
 }
 
@@ -186,33 +189,49 @@ func parseConfiguration(configuration *RawConfiguration) (*Configuration, error)
 
 // END parseConfiguration OMIT
 
+// START ConfigurationCalculator OMIT
 type ConfigurationCalculator struct {
 	configuration *Configuration
 	commands      []string
 }
 
+// END ConfigurationCalculator OMIT
+
+// START NewConfigurationCalculator OMIT
 func NewConfigurationCalculator(configuration *Configuration) *ConfigurationCalculator {
 	return &ConfigurationCalculator{
 		configuration: configuration,
 	}
 }
 
+// END NewConfigurationCalculator OMIT
+
+// START ConfigurationCalculator GetCommands OMIT
 func (c *ConfigurationCalculator) GetCommands() []string {
 	return c.commands
 }
 
+// END ConfigurationCalculator GetCommands OMIT
+
+// START ConfigurationCalculator calculateDownCommands OMIT
 func (c *ConfigurationCalculator) calculateDownCommands() error {
 	downCommands, err := calculateDownCommands(c.configuration)
 	c.commands = append(c.commands, downCommands...)
 	return err
 }
 
+// END ConfigurationCalculator calculateDownCommands OMIT
+
+// START ConfigurationCalculator calculateUpCommands OMIT
 func (c *ConfigurationCalculator) calculateUpCommands() error {
 	upCommands, err := calculateUpCommands(c.configuration)
 	c.commands = append(c.commands, upCommands...)
 	return err
 }
 
+// END ConfigurationCalculator calculateUpCommands OMIT
+
+// START Do OMIT
 func Do(fs ...func() error) error {
 	for _, f := range fs {
 		if err := f(); err != nil {
@@ -222,15 +241,17 @@ func Do(fs ...func() error) error {
 	return nil
 }
 
+// END Do OMIT
+
 // START calculateCommands OMIT
 func calculateCommands(configuration *Configuration) ([]string, error) {
-	calculator := NewConfigurationCalculator(configuration)
-	if err := Do(
-		calculator.calculateDownCommands,
-		calculator.calculateUpCommands,
-	); err != nil {
-		return nil, err
-	}
+	calculator := NewConfigurationCalculator(configuration) // HL_monad
+	if err := Do(                                           // HL_monad
+		calculator.calculateDownCommands, // HL_monad
+		calculator.calculateUpCommands,   // HL_monad
+	); err != nil { // HL_monad
+		return nil, err // HL_monad
+	} // HL_monad
 
 	return calculator.GetCommands(), nil
 }

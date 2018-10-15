@@ -31,18 +31,21 @@ type Configuration struct {
 
 // START getCommandsFromFile OMIT
 func getCommandsFromFile(filename string) ([]string, error) {
-	rawConfiguration, err := readConfiguration(filename)
-	if err != nil {
-		return nil, err
-	}
-	configuration, err := parseConfiguration(rawConfiguration)
-	if err != nil {
-		return nil, err
-	}
-	commands, err := calculateCommands(configuration)
-	if err != nil {
-		return nil, err
-	}
+	rawConfiguration, err := readConfiguration(filename) // HL_generic_monad
+	if err != nil {                                      // HL_generic_monad
+		return nil, err // HL_generic_monad
+	} // HL_generic_monad
+
+	configuration, err := parseConfiguration(rawConfiguration) // HL_generic_monad
+	if err != nil {                                            // HL_generic_monad
+		return nil, err // HL_generic_monad
+	} // HL_generic_monad
+
+	commands, err := calculateCommands(configuration) // HL_generic_monad
+	if err != nil {                                   // HL_generic_monad
+		return nil, err // HL_generic_monad
+	} // HL_generic_monad
+
 	return commands, nil
 }
 
@@ -77,16 +80,16 @@ func readConfiguration(filename string) (*RawConfiguration, error) {
 
 // START parseConfiguration OMIT
 func parseConfiguration(configuration *RawConfiguration) (*Configuration, error) {
-	version, err := strconv.Atoi(string(configuration.header))
-	if err != nil {
-		return nil, err
-	}
+	version, err := strconv.Atoi(string(configuration.header)) // HL_check
+	if err != nil {                                            // HL_check
+		return nil, err // HL_check
+	} // HL_check
 
-	var data map[string]string
-	err = json.Unmarshal(configuration.body, &data)
-	if err != nil {
-		return nil, err
-	}
+	var data map[string]string                      // HL_check
+	err = json.Unmarshal(configuration.body, &data) // HL_check
+	if err != nil {                                 // HL_check
+		return nil, err // HL_check
+	} // HL_check
 
 	return &Configuration{
 		Version: version,
@@ -99,16 +102,16 @@ func parseConfiguration(configuration *RawConfiguration) (*Configuration, error)
 // START calculateCommands OMIT
 func calculateCommands(configuration *Configuration) ([]string, error) {
 	var commands []string
-	downCommands, err := calculateDownCommands(configuration)
-	if err != nil {
-		return nil, err
-	}
+	downCommands, err := calculateDownCommands(configuration) // HL_monad
+	if err != nil {                                           // HL_monad
+		return nil, err // HL_monad
+	} // HL_monad
 	commands = append(commands, downCommands...)
 
-	upCommands, err := calculateUpCommands(configuration)
-	if err != nil {
-		return nil, err
-	}
+	upCommands, err := calculateUpCommands(configuration) // HL_monad
+	if err != nil {                                       // HL_monad
+		return nil, err // HL_monad
+	} // HL_monad
 	commands = append(commands, upCommands...)
 
 	return commands, nil

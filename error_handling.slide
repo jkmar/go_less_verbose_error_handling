@@ -1,6 +1,13 @@
 Less verbose error handling
 
-* How typical errors are handled
+* Agenda
+
+- How errors are handled now
+- How we can do better
+- How errors will be handled in the future
+- Summary
+
+* How errors are handled now
 
 * Docker
 
@@ -14,7 +21,11 @@ Less verbose error handling
 
 .code examples/kubernetes.go /START/,/END/
 
-* Example
+* and many more
+
+.image resources/most_common_words.png
+
+* How we can do better
 
 * Example
 
@@ -52,14 +63,14 @@ Less verbose error handling
 
 * Error in struct
 
-We are using the same function twice
-Maybe we can move error handling there?
+we are using the same function twice
+maybe we can move error handling there?
 
 .code standard/main.go /START readConfiguration ReadLine/,/END readConfiguration ReadLine/
 
 * Error in struct
 
-We can create stateful reader with error
+we can create stateful reader with error
 
 .code error_in_struct/main.go /START ErrorReader/,/END ErrorReader/
 
@@ -69,7 +80,7 @@ We can create stateful reader with error
 
 * Error in struct
 
-And then check error inside ReadLine function
+and then check error inside ReadLine function
 
 .code error_in_struct/main.go /START ErrorReader ReadLine/,/END ErrorReader ReadLine/
 
@@ -93,7 +104,7 @@ And then check error inside ReadLine function
 
 * Generated code for error in struct
 
-We could try using the same approach here
+we could try using the same approach here,
 but now we have two function instead of one
 
 .code standard/main.go /START parseConfiguration ErrorChecker/,/END parseConfiguration ErrorChecker/
@@ -299,3 +310,23 @@ also we don't lose stack traces from panics with this approach
 .code go2_panic/main.go /START calculateDownCommands/,/END calculateDownCommands/
 
 .play go2_panic/main.go /START main/,/END main/
+
+* Summary
+
+* Summary
+
+we have covered the following way of error handling:
+
+- error in struct
+- error in struct with generated code
+- monads with stateful structs
+- generic monads with functions
+- go2 style checks
+
+* Summary
+
+some of these methods are used in practice
+
+.code examples/bufio.go /START Writer/,/END Writer/
+
+.code examples/bufio.go /START Writer Flush/,/END Writer Flush/

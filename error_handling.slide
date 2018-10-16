@@ -1,5 +1,6 @@
-Title
-Subtitle
+Less verbose error handling
+
+* How typical errors are handled
 
 * Docker
 
@@ -43,7 +44,7 @@ Subtitle
 
 .play standard/main.go /START main/,/END main/
 
-* Error in struct
+* First improvement
 
 * Error in struct
 
@@ -51,17 +52,24 @@ Subtitle
 
 * Error in struct
 
+We are using the same function twice
+Maybe we can move error handling there?
+
+.code standard/main.go /START readConfiguration ReadLine/,/END readConfiguration ReadLine/
+
+* Error in struct
+
+We can create stateful reader with error
+
 .code error_in_struct/main.go /START ErrorReader/,/END ErrorReader/
 
-* Error in struct
-
 .code error_in_struct/main.go /START NewErrorReader/,/END NewErrorReader/
-
-* Error in struct
 
 .code error_in_struct/main.go /START ErrorReader Err/,/END ErrorReader Err/
 
 * Error in struct
+
+And then check error inside ReadLine function
 
 .code error_in_struct/main.go /START ErrorReader ReadLine/,/END ErrorReader ReadLine/
 
@@ -77,61 +85,48 @@ Subtitle
 
 .play error_in_struct/main.go /START main/,/END main/
 
-* Error checker
+* Second improvement
 
-* Error checker
+* Generated code for error in struct
 
 .code standard/main.go /START parseConfiguration/,/END parseConfiguration/
 
-* Error checker
+* Generated code for error in struct
 
-.code check/main.go /START ErrorParser/,/END ErrorParser/
+We could try using the same approach here
+but now we have two function instead of one
 
-* Error checker
+.code standard/main.go /START parseConfiguration ErrorChecker/,/END parseConfiguration ErrorChecker/
 
-.code check/main.go /START NewErrorParser/,/END NewErrorParser/
+* Generated code for error in struct
 
-* Error checker
-
-.code check/main.go /START ErrorParser Err/,/END ErrorParser Err/
-
-* Error checker
-
-.code check/main.go /START ErrorParser parseVersion/,/END ErrorParser parseVersion/
-
-* Error checker
-
-.code check/main.go /START ErrorParser parseData/,/END ErrorParser parseData/
-
-* Error checker
+Error checker will be similar
 
 .code check/main.go /START NewErrorChecker/,/END NewErrorChecker/
 
-* Error checker
-
 .code check/main.go /START ErrorChecker Err/,/END ErrorChecker Err/
 
-* Error checker
+* Generated code for error in struct
+
+but the library functions can be generated
 
 .code check/main.go /START ErrorChecker StrconvAtoi/,/END ErrorChecker StrconvAtoi/
 
-* Error checker
-
 .code check/main.go /START ErrorChecker JsonUnmarshal/,/END ErrorChecker JsonUnmarshal/
 
-* Error checker
+* Generated code for error in struct
 
 .code standard/main.go /START parseConfiguration/,/END parseConfiguration/ HL_check
 
-* Error checker
+* Generated code for error in struct
 
 .code check/main.go /START parseConfiguration/,/END parseConfiguration/ HL_check
 
-* Error checker
+* Generated code for error in struct
 
 .play check/main.go /START main/,/END main/
 
-* Monad
+* Third improvement
 
 * Monad
 
@@ -139,25 +134,32 @@ Subtitle
 
 * Monad
 
+we have multiple custom functions,
+so the previous approaches doesn't work
+
+.code standard/main.go /START calculateCommands/,/END calculateCommands/
+
+* Monad
+
+we can try creating a struct without error this time
+
 .code monad/main.go /START ConfigurationCalculator/,/END ConfigurationCalculator/
 
-* Monad
-
 .code monad/main.go /START NewConfigurationCalculator/,/END NewConfigurationCalculator/
-
-* Monad
 
 .code monad/main.go /START ConfigurationCalculator GetCommands/,/END ConfigurationCalculator GetCommands/
 
 * Monad
 
-.code monad/main.go /START ConfigurationCalculator calculateDownCommands/,/END ConfigurationCalculator calculateDownCommands/
+and return error instead
 
-* Monad
+.code monad/main.go /START ConfigurationCalculator calculateDownCommands/,/END ConfigurationCalculator calculateDownCommands/
 
 .code monad/main.go /START ConfigurationCalculator calculateUpCommands/,/END ConfigurationCalculator calculateUpCommands/
 
 * Monad
+
+then we can chain these calls until the first error
 
 .code monad/main.go /START Do/,/END Do/
 
@@ -173,7 +175,7 @@ Subtitle
 
 .play monad/main.go /START main/,/END main/
 
-* Generic Monad
+* Fourth improvement
 
 * Generic Monad
 
@@ -181,35 +183,52 @@ Subtitle
 
 * Generic Monad
 
+now we have multiple variables
+each of which we are using only once
+
+.code standard/main.go /START getCommandsFromFile GenericMonad/,/END getCommandsFromFile GenericMonad/
+
+* Generic Monad
+
+the previous approach gives too much variables
+
 .code generic_monad/main.go /START CommandGetter/,/END CommandGetter/
 
 * Generic Monad
 
+and too much boilerplate with errors
+
 .code generic_monad/main.go /START CommandGetter readConfiguration/,/END CommandGetter readConfiguration/
 
-* Generic Monad
-
 .code generic_monad/main.go /START CommandGetter parseConfiguration/,/END CommandGetter parseConfiguration OMIT/
-
-* Generic Monad
 
 .code generic_monad/main.go /START CommandGetter calculateCommands/,/END CommandGetter calculateCommands/
 
 * Generic Monad
 
+we could try using generic functions taking and returning `interface{}` arguments
+
 .code generic_monad/main.go /START Func/,/END Func/
-
-* Generic Monad
-
-.code generic_monad/main.go /START EitherWrap/,/END EitherWrap/
-
-* Generic Monad
 
 .code generic_monad/main.go /START DoEither/,/END DoEither/
 
 * Generic Monad
 
-.code generic_monad/main.go /START MakeTyped/,/END MakeTyped/
+unfortunately this does not compile
+
+.play generic_monad_wrong/main.go /START getCommandsFromFile doesNotCompile/,/END getCommandsFromFile doesNotCompile/
+
+* Generic Monad
+
+however we can use reflect to wrap our functions
+
+.code generic_monad/main.go /START EitherWrap/,/END EitherWrap/
+
+* Generic Monad
+
+to make this work we also need to make the result type
+
+.code generic_monad/main.go /START TypeStringSlice/,/END TypeStringSlice/
 
 * Generic Monad
 
@@ -227,6 +246,8 @@ Subtitle
 
 * Go 2
 
+in go 2 we will have `check` statement which returns error if called function returned an error
+
 .code go2/go2.go /START getCommandsFromFile/,/END getCommandsFromFile/ HL_check
 
 * Go 2
@@ -243,32 +264,38 @@ Subtitle
 
 * Go 2
 
-.code go2/go2.go /START calculateDownCommands/,/END calculateDownCommands/ HL_check
+can we recreate this behavior in go 1?
 
 * Go 2
 
-.code go2/go2.go /START calculateUpCommands/,/END calculateUpCommands/ HL_check
-
-* Go 2
+we can, but we have to use panics
 
 .code go2/main.go /START Error/,/END Error/
 
-* Go 2
-
 .code go2/main.go /START NewError/,/END NewError/
-
-* Go 2
 
 .code go2/main.go /START check/,/END check/
 
 * Go 2
 
+we have to have custom error to distinguish between our errors and different panics
+
 .code go2/main.go /START handle/,/END handle/
 
 * Go 2
+
+we don not need reflect, we can use type assertions
 
 .code go2/main.go /START getCommandsFromFile/,/END getCommandsFromFile/ HL_check
 
 * Go 2
 
 .play go2/main.go /START main/,/END main/
+
+* Go 2
+
+also we don't lose stack traces from panics with this approach
+
+.code go2_panic/main.go /START calculateDownCommands/,/END calculateDownCommands/
+
+.play go2_panic/main.go /START main/,/END main/

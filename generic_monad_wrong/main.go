@@ -1,4 +1,4 @@
-package main
+package generic_monad_wrong
 
 import (
 	"bufio"
@@ -100,8 +100,8 @@ func DoEither(x interface{}, fs ...Func) (interface{}, error) {
 
 // END DoEither OMIT
 
-// START TypeStringSlice OMIT
-func TypeStringSlice(x interface{}, err error) ([]string, error) {
+// START MakeTyped OMIT
+func MakeTyped(x interface{}, err error) ([]string, error) {
 	result, ok := x.([]string)
 	if !ok {
 		return nil, err
@@ -109,16 +109,18 @@ func TypeStringSlice(x interface{}, err error) ([]string, error) {
 	return result, err
 }
 
-// END TypeStringSlice OMIT
+// END MakeTyped OMIT
 
 // START getCommandsFromFile OMIT
 func getCommandsFromFile(filename string) ([]string, error) {
-	return TypeStringSlice(DoEither( // HL_generic_monad
-		filename,                       // HL_generic_monad
-		EitherWrap(readConfiguration),  // HL_generic_monad
-		EitherWrap(parseConfiguration), // HL_generic_monad
-		EitherWrap(calculateCommands),  // HL_generic_monad
-	)) // HL_generic_monad
+	// START getCommandsFromFile doesNotCompile OMIT
+	DoEither( // HL_generic_monad
+		filename,           // HL_generic_monad
+		readConfiguration,  // HL_generic_monad
+		parseConfiguration, // HL_generic_monad
+		calculateCommands,  // HL_generic_monad
+	) // HL_generic_monad
+	// END getCommandsFromFile doesNotCompile OMIT
 }
 
 // END getCommandsFromFile OMIT

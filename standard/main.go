@@ -31,7 +31,7 @@ type Configuration struct {
 
 // START getCommandsFromFile OMIT
 func getCommandsFromFile(filename string) ([]string, error) {
-	// START getCommandsFromFile GenericMonad OMIT
+	// START GenericMonadGetCommandsFromFile OMIT
 	rawConfiguration, err := readConfiguration(filename) // HL_generic_monad
 	if err != nil {                                      // HL_generic_monad
 		return nil, err // HL_generic_monad
@@ -46,7 +46,7 @@ func getCommandsFromFile(filename string) ([]string, error) {
 	if err != nil {                                   // HL_generic_monad
 		return nil, err // HL_generic_monad
 	} // HL_generic_monad
-	// END getCommandsFromFile GenericMonad OMIT
+	// END GenericMonadGetCommandsFromFile OMIT
 
 	return commands, nil
 }
@@ -62,7 +62,7 @@ func readConfiguration(filename string) (*RawConfiguration, error) {
 	defer f.Close()
 
 	reader := bufio.NewReader(f) // HL_error_in_struct
-	// START readConfiguration ReadLine OMIT
+	// START ReadLineReadConfiguration OMIT
 	header, _, err := reader.ReadLine() // HL_error_in_struct
 	if err != nil {                     // HL_error_in_struct
 		return nil, err // HL_error_in_struct
@@ -72,7 +72,7 @@ func readConfiguration(filename string) (*RawConfiguration, error) {
 	if err != nil {                   // HL_error_in_struct
 		return nil, err // HL_error_in_struct
 	} // HL_error_in_struct
-	// END readConfiguration ReadLine OMIT
+	// END ReadLineReadConfiguration OMIT
 
 	return &RawConfiguration{
 		header: header,
@@ -84,7 +84,7 @@ func readConfiguration(filename string) (*RawConfiguration, error) {
 
 // START parseConfiguration OMIT
 func parseConfiguration(configuration *RawConfiguration) (*Configuration, error) {
-	// START parseConfiguration ErrorChecker OMIT
+	// START ErrorCheckerParseConfiguration OMIT
 	version, err := strconv.Atoi(string(configuration.header)) // HL_check
 	if err != nil {                                            // HL_check
 		return nil, err // HL_check
@@ -95,7 +95,7 @@ func parseConfiguration(configuration *RawConfiguration) (*Configuration, error)
 	if err != nil {                                 // HL_check
 		return nil, err // HL_check
 	} // HL_check
-	// END parseConfiguration ErrorChecker OMIT
+	// END ErrorCheckerParseConfiguration OMIT
 
 	return &Configuration{
 		Version: version,
@@ -108,7 +108,7 @@ func parseConfiguration(configuration *RawConfiguration) (*Configuration, error)
 // START calculateCommands OMIT
 func calculateCommands(configuration *Configuration) ([]string, error) {
 	var commands []string
-	// START calculateCommands Monad OMIT
+	// START MonadCalculateCommands OMIT
 	downCommands, err := calculateDownCommands(configuration) // HL_monad
 	if err != nil {                                           // HL_monad
 		return nil, err // HL_monad
@@ -120,7 +120,7 @@ func calculateCommands(configuration *Configuration) ([]string, error) {
 		return nil, err // HL_monad
 	} // HL_monad
 	commands = append(commands, upCommands...)
-	// END calculateCommands Monad OMIT
+	// END MonadCalculateCommands OMIT
 
 	return commands, nil
 }

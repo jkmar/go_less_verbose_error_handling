@@ -66,7 +66,7 @@ Less verbose error handling
 we are using the same function twice
 maybe we can move error handling there?
 
-.code standard/main.go /START readConfiguration ReadLine/,/END readConfiguration ReadLine/
+.code standard/main.go /START ReadLineReadConfiguration/,/END ReadLineReadConfiguration/
 
 * Error in struct
 
@@ -107,7 +107,7 @@ and then check error inside ReadLine function
 we could try using the same approach here,
 but now we have two function instead of one
 
-.code standard/main.go /START parseConfiguration ErrorChecker/,/END parseConfiguration ErrorChecker/
+.code standard/main.go /START ErrorCheckerParseConfiguration/,/END ErrorCheckerParseConfiguration/
 
 * Generated code for error in struct
 
@@ -148,7 +148,7 @@ but the library functions can be generated
 we have multiple custom functions,
 so the previous approaches doesn't work
 
-.code standard/main.go /START calculateCommands/,/END calculateCommands/
+.code standard/main.go /START MonadCalculateCommands/,/END MonadCalculateCommands/
 
 * Monad
 
@@ -197,11 +197,11 @@ then we can chain these calls until the first error
 now we have multiple variables
 each of which we are using only once
 
-.code standard/main.go /START getCommandsFromFile GenericMonad/,/END getCommandsFromFile GenericMonad/
+.code standard/main.go /START GenericMonadGetCommandsFromFile/,/END GenericMonadGetCommandsFromFile/
 
 * Generic Monad
 
-the previous approach gives too much variables
+the previous approach gives too many variables
 
 .code generic_monad/main.go /START CommandGetter/,/END CommandGetter/
 
@@ -257,7 +257,7 @@ to make this work we also need to make the result type
 
 * Go 2
 
-in go 2 we will have `check` statement which returns error if called function returned an error
+in go 2 we will have `check` statement which will exit current scope with error when underlying function returns error
 
 .code go2/go2.go /START getCommandsFromFile/,/END getCommandsFromFile/ HL_check
 
@@ -295,7 +295,7 @@ we have to have custom error to distinguish between our errors and different pan
 
 * Go 2
 
-we don not need reflect, we can use type assertions
+we do not need reflect, we can use type assertions
 
 .code go2/main.go /START getCommandsFromFile/,/END getCommandsFromFile/ HL_check
 
